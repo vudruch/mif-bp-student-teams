@@ -1,2 +1,2 @@
-# mif-bp-student-teams
-BuddyPress plugin for the organization of work and remote support for student groups
+# mif-bp-student-places
+BuddiPress plug-in for remote support of student groups

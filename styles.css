@@ -1,0 +1,10 @@
+.after-header {
+    clear: both;
+    margin: 2em 0;
+}
+
+.note {
+    padding: 2em;
+    border: 3px solid #ccc;
+
+}
