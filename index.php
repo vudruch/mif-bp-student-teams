@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: Mif BP Student Teams
-Plugin URI: https://github.com/alexey-sergeev/mif-bp-student-teams
+Plugin Name: MIF BP Student Teams
+Plugin URI: https://github.com/vudruch/mif-bp-student-teams
 Description: BuddiPress плагин для организации работы и дистанционной поддержки студенческих групп 
-Author: Алексей Н. Сергеев
-Version: 1.0
-Author URI: https://vk.com/alexey_sergeev
+Author: Евгения Выдрыч
+Version: 0.1
+Author URI: ...
 */
 
 
@@ -52,12 +52,60 @@ function mif_bp_stt_after_group_header() {
 
    if ( ! bp_groups_has_group_type( groups_get_current_group()->group_id, 'studentteam' ) ) return;
 
-   echo '<div class="after-header"><div class="note">Привет, это важное сообщение для всех! Я плагин студенческих групп 
+   echo '<div class="after-header">';
+
+   if ( groups_is_user_admin( get_current_user_id(), groups_get_current_group()->group_id )) {
+
+       name_of_stt();
+
+   }
+
+
+    echo '<div class="note">Привет, это важное сообщение для всех! Я плагин студенческих групп 
             и у меня добрые намерения. В этом блоке можно размещать что-то полезное для всех &mdash; сообщения, файлы, 
-            напоминания и др. Используйте этот пример, чтобы сделать что-то новое и интересное.</div></div>';
+            напоминания и др. Используйте этот пример, чтобы сделать что-то новое и интересное.</div>';
+
+
+    echo '</div>';
 
 }
 
+
+function name_of_stt() {
+
+    $out = '';
+
+    if ( isset($_POST['submit']) ) {
+
+        $out .= '<p>Сохранено!';
+        groups_add_groupmeta( groups_get_current_group()->group_id, 'name_of_stt', $_POST['name_of_stt'] );
+
+    }
+
+    $out .= get_stt_list();
+
+    $out .= '<p><form method="POST">
+    <input type="text" name="name_of_stt">
+    <input type="submit" name="submit" value="Добавить">
+    </form>';
+
+    echo $out;
+
+}
+
+function get_stt_list() {
+
+    $out = '';
+
+    $arr = groups_get_groupmeta( groups_get_current_group()->group_id, 'name_of_stt', false );
+
+    foreach ( (array)$arr as $item ) {
+        $out .= '<p>' . $item;
+    }
+
+    return $out;
+
+}
 
 // bp_before_group_header_meta
 // bp_group_header_meta
